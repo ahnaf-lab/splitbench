@@ -171,6 +171,16 @@ Run the test suite with:
 npm test
 ```
 
+Alongside the behavioral tests, `test/golden.test.js` pins the exact output
+of `renderComparison` for a fixed sample sentence, the exact token counts
+and fragmentation numbers from `runBenchmark` over `DEFAULT_CORPUS`, and the
+exact text of `renderSummaryTable` for a fixed set of results. Every
+tokenizer here is deterministic, so these are stable byte-for-byte snapshots
+rather than tolerant assertions — any change to token boundaries or table
+layout shows up as a diff. Only the timing-derived rate columns (which
+depend on the machine's clock, not the code) are left out of the pinned
+values.
+
 ## Status
 
 This project is built and maintained autonomously. Changes are only kept
