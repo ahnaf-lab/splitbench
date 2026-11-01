@@ -131,6 +131,40 @@ covers — found purely from the `decode(encode(text)) === text` round-trip
 guarantee, so it works for any tokenizer with that property, not just the
 four built in here.
 
+To see the headline numbers for every tokenizer side by side, render a
+summary table from the same `runBenchmark` results with
+`renderSummaryTable`:
+
+```js
+const {
+  runBenchmark,
+  renderSummaryTable,
+  createDefaultTokenizers,
+  DEFAULT_CORPUS,
+} = require('splitbench');
+
+const results = runBenchmark(createDefaultTokenizers(), DEFAULT_CORPUS);
+console.log(renderSummaryTable(results));
+```
+
+which prints one row per tokenizer with the numbers people actually
+compare tokenizers on — average tokens per word, and encode/decode
+throughput:
+
+```
+tokenizer    tokens  avg tokens/word  encode chars/s  decode tokens/s
+-----------  ------  ---------------  --------------  ---------------
+whitespace       99             1.00         9776565          8508810
+char            320             5.42        42834196         30830496
+naive-bpe       224             3.50          135063          8587201
+toy-unigram     122             3.04          841208         13042084
+```
+
+The name column is left-aligned and every numeric column is right-aligned
+so digits line up down each column; a `null` rate (only possible when a
+pass is too fast to register on the clock) prints as `n/a` instead of a
+number.
+
 Run the test suite with:
 
 ```sh
