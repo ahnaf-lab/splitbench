@@ -1,0 +1,17 @@
+{
+  "name": "splitbench",
+  "version": "0.1.0",
+  "description": "Benchmark and compare small tokenizer implementations side by side: token count, word fragmentation, and encode/decode speed.",
+  "main": "lib/index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "lib"
+  ]
+}
