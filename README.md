@@ -104,6 +104,33 @@ builds one instance of each of the four tokenizers above; `DEFAULT_CORPUS`
 is a small fixed corpus bundled for convenience, but any non-empty string
 works as the corpus.
 
+To see how each tokenizer breaks up a sentence, render a striped
+side-by-side comparison with `renderComparison`:
+
+```js
+const { renderComparison, createDefaultTokenizers } = require('splitbench');
+
+console.log(renderComparison(createDefaultTokenizers(), 'the quick brown fox'));
+```
+
+which prints one row per tokenizer: a line of bracketed token cells, and a
+stripe bar underneath that alternates fill character at each cell so
+boundaries stay visible even between visually similar tokens, e.g.:
+
+```
+whitespace  (7 tokens)
+[the][ ][quick][ ][brown][ ][fox]
+=====---=======---=======---=====
+```
+
+`renderStripeRow(tokenizer, text)` renders a single tokenizer's row (an
+object with `name`, `tokenCount`, `cells`, and `bar`), and
+`tokenSpans(tokenizer, text)` returns the lower-level `{ token, text }`
+pairs mapping each token back onto the slice of the original sentence it
+covers — found purely from the `decode(encode(text)) === text` round-trip
+guarantee, so it works for any tokenizer with that property, not just the
+four built in here.
+
 Run the test suite with:
 
 ```sh
